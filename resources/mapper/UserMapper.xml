@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间用于隔离sql -->
+<!-- 
+动态代理开发规则：
+1、namespace 接口全路径名
+2、接口方法名和sql名一致
+3、入参与parameterType一致
+4、返回值与resultType一致
+ -->
+<mapper namespace="com.binmaa.dao.UserMapper">
+	<select id="getUserByID" parameterType="int" resultType="user">
+		select * from user where id =#{id}
+	</select>
+</mapper>

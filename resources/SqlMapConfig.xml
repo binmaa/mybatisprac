@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- 先加载内部的再加载外部的，当name相同时会覆盖 -->
+  <properties resource="jdbc.properties">
+  	<property name="jdbc.driverClass" value="com.mysql.jdbc.Driver"/>
+  	<property name="jdbc.username" value="root1"/>
+  	<property name="jdbc.password" value="1qaz2wsx"/>
+  </properties>
+  <!-- 别名 -->
+  <typeAliases>
+  	<!-- 单个别名配置，别名不区分大小写 -->
+  	<!-- <typeAlias type="com.binmaa.pojo.User" alias="user"/> -->
+  	<!-- 包扫描方式，默认别名为类的全名 -->
+  	<package name="com.binmaa.pojo"/>
+  </typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${jdbc.driverClass}"/>
+        <property name="url" value="${jdbc.jdbcUrl}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <!-- 加载配置文件 -->
+  <mappers>
+  	<!-- <mapper resource="mapper/User.xml"/>
+  	<mapper resource="mapper/UserMapper.xml"/> -->
+  	<!-- 映射文件class扫描器
+  		1、接口文件名必须与映射文件在同意目录
+  		2、接口文件必须和映射文件同名
+  	 -->
+  	<!-- <mapper class="com.binmaa.dao.UserMapper"/> -->
+  	<!-- 映射文件 包扫面的方式
+  		1、接口文件名必须与映射文件在同意目录
+  		2、接口文件必须和映射文件同名
+  	 -->
+  	<package name="com.binmaa.mapper"/>
+  </mappers>
+</configuration>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间用于隔离sql -->
+<!-- 
+#{id}：占位符 同jdbc ？
+${value} :拼接字符串 基本数据类型 value；引用数据类型直接放属性名
+ -->
+<mapper namespace="user">
+	<select id="getUserByID" parameterType="int" resultType="com.binmaa.pojo.User">
+		select * from user where id =#{id}
+	</select>
+	<select id="getUserByName" parameterType="String" resultType="com.binmaa.pojo.User">
+		<!-- select * from mybatis.user where username like #{usename} -->
+		select * from mybatis.user where username like '%${value}%'
+	</select>
+	<!-- useGeneratedKeys：使用自增 与keyProperty配套使用 -->
+	<insert id="insertUser" parameterType="com.binmaa.pojo.User" useGeneratedKeys="false" keyProperty="id">
+		<!-- selectKey:返回主键
+		     order：指定selectKey什么时间返回
+		     keyProperty：user中的主键
+		     resultType:返回类型 -->
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
+			select LAST_INSERT_ID();
+		</selectKey>
+		<!-- <selectKey keyProperty="uuid" resultType="string" order="BEFORE">
+			select replace(UUID(),"-","")
+		</selectKey> -->
+		INSERT INTO `user` (`username`, `birthday`, `sex`, `address`,`uuid`) VALUES (#{username}, #{birthday}, #{sex}, #{address},#{uuid});
+	</insert>
+	<update id="updateUser" parameterType="com.binmaa.pojo.User" >
+		UPDATE `mybatis`.`user`
+		SET 
+		 `username` = #{username}
+		WHERE
+			(`id` = #{id});
+	</update>
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		DELETE from `user`
+		WHERE
+			id = #{id};
+	</delete>
+</mapper>
